@@ -1,0 +1,22 @@
+{
+  "name": "interactive-resume-3d",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Scroll-driven 3D interactive resume of Varun Goel",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource-variable/space-grotesk": "5.3.0",
+    "three": "0.186.0"
+  },
+  "devDependencies": {
+    "@types/three": "0.186.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.0"
+  }
+}
