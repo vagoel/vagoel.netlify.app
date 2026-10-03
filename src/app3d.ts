@@ -32,13 +32,13 @@ export const boot3D = async (caps: Capabilities, params: URLSearchParams, loader
 
   const sound = new Sound();
   const hud = new Hud(document.getElementById('hud')!, document.getElementById('cards')!, document.getElementById('tip')!, scroll, sound, anchors, goClassic);
-  // Enable sound by default on first user interaction
+  // Enable sound on first user gesture (must be a user-activation event for AudioContext)
   const enableSound = () => {
     if (!sound.on) sound.toggle();
     hud.syncSound(true);
-    for (const ev of ['click', 'keydown', 'touchstart', 'scroll'] as const) removeEventListener(ev, enableSound);
+    for (const ev of ['pointerdown', 'keydown', 'touchstart'] as const) removeEventListener(ev, enableSound);
   };
-  for (const ev of ['click', 'keydown', 'touchstart', 'scroll'] as const) addEventListener(ev, enableSound, { once: false });
+  for (const ev of ['pointerdown', 'keydown', 'touchstart'] as const) addEventListener(ev, enableSound, { once: false });
   exp.onFrame = (s) => hud.frame(s);
   exp.onTier = (t) => hud.tier(t);
 

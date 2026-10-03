@@ -58,9 +58,15 @@ export class Sound {
     if (!this.ctx) this.init();
     const ctx = this.ctx!;
     this.on = !this.on;
-    void ctx.resume();
-    this.master!.gain.cancelScheduledValues(ctx.currentTime);
-    this.master!.gain.linearRampToValueAtTime(this.on ? 0.7 : 0, ctx.currentTime + 0.6);
+    const ramp = () => {
+      this.master!.gain.cancelScheduledValues(ctx.currentTime);
+      this.master!.gain.linearRampToValueAtTime(this.on ? 0.7 : 0, ctx.currentTime + 0.6);
+    };
+    if (ctx.state === 'suspended') {
+      void ctx.resume().then(ramp);
+    } else {
+      ramp();
+    }
     return this.on;
   }
 
