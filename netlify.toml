@@ -1,6 +1,6 @@
 [build]
-  command = "npm --prefix interactive-resume-3d ci && npm --prefix interactive-resume-3d run build"
-  publish = "interactive-resume-3d/dist"
+  command = "npm ci && npm run build"
+  publish = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
