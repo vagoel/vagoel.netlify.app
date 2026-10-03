@@ -1,5 +1,5 @@
 import { esc } from '../classic';
-import { chapters, cities } from '../data/chapters';
+import { chapters, cities, cityToNav } from '../data/chapters';
 import { profile } from '../data/profile';
 import type { FrameState } from '../scene/experience';
 import type { PickInfo } from '../scene/chapters/types';
@@ -102,6 +102,12 @@ export class Hud {
     cardsRoot.hidden = false;
   }
 
+  syncSound(on: boolean) {
+    this.soundBtn.setAttribute('aria-pressed', String(on));
+    this.soundBtn.querySelector('span')!.textContent = on ? 'Sound on' : 'Sound off';
+    this.soundBtn.classList.toggle('is-on', on);
+  }
+
   private setTour(on: boolean) {
     this.tourBtn.setAttribute('aria-pressed', String(on));
     this.tourBtn.classList.toggle('is-on', on);
@@ -124,7 +130,7 @@ export class Hud {
       document.documentElement.style.setProperty('--accent', c.palette.accent);
       this.dots.forEach((d, i) => d.classList.toggle('is-current', i === s.nearest));
       this.sound.ping(s.nearest);
-      const ci = c.city ? cities.indexOf(c.city) : s.nearest === 0 ? -1 : this.cityIdx;
+      const ci = c.city ? cities.indexOf(cityToNav(c.city)) : s.nearest === 0 ? -1 : this.cityIdx;
       if (ci !== this.cityIdx) {
         this.cityIdx = ci;
         this.cityEls.forEach((el, i) => {

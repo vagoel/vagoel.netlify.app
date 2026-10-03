@@ -30,7 +30,15 @@ export const boot3D = async (caps: Capabilities, params: URLSearchParams, loader
   scroll.onProgress = (p) => exp.setTarget(p);
   scroll.set(clamp(Number(params.get('p')) || 0));
 
-  const hud = new Hud(document.getElementById('hud')!, document.getElementById('cards')!, document.getElementById('tip')!, scroll, new Sound(), anchors, goClassic);
+  const sound = new Sound();
+  const hud = new Hud(document.getElementById('hud')!, document.getElementById('cards')!, document.getElementById('tip')!, scroll, sound, anchors, goClassic);
+  // Enable sound by default on first user interaction
+  const enableSound = () => {
+    if (!sound.on) sound.toggle();
+    hud.syncSound(true);
+    for (const ev of ['click', 'keydown', 'touchstart', 'scroll'] as const) removeEventListener(ev, enableSound);
+  };
+  for (const ev of ['click', 'keydown', 'touchstart', 'scroll'] as const) addEventListener(ev, enableSound, { once: false });
   exp.onFrame = (s) => hud.frame(s);
   exp.onTier = (t) => hud.tier(t);
 
@@ -62,8 +70,8 @@ export const boot3D = async (caps: Capabilities, params: URLSearchParams, loader
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     const t = e.target as HTMLElement;
     if (t.closest('button, a, input, textarea') && (e.key === ' ' || e.key === 'Enter')) return;
-    const next = ['ArrowRight', 'ArrowDown', 'PageDown'].includes(e.key) || (e.key === ' ' && !e.shiftKey);
-    const prev = ['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key) || (e.key === ' ' && e.shiftKey);
+    const next = ['ArrowRight', 'ArrowUp', 'PageUp'].includes(e.key) || (e.key === ' ' && !e.shiftKey);
+    const prev = ['ArrowLeft', 'ArrowDown', 'PageDown'].includes(e.key) || (e.key === ' ' && e.shiftKey);
     if (next || prev) {
       e.preventDefault();
       scroll.step(next ? 1 : -1);

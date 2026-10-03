@@ -177,6 +177,9 @@ const defs: Omit<Chapter, 'index'>[] = [
 
 export const chapters: Chapter[] = defs.map((d, index) => ({ ...d, index }));
 
-export const cities = ['Pune', 'Noida', 'Singapore', 'Abu Dhabi'];
+export const cities = ['India', 'Singapore', 'Abu Dhabi'];
+
+const INDIA_CITIES = new Set(['Pune', 'Noida']);
+export const cityToNav = (city: string): string => INDIA_CITIES.has(city) ? 'India' : city;
 
 export const rangeOf = (c: Chapter) => (c.role ? fmtRange(c.role) : '');
