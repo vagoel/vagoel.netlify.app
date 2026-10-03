@@ -1,5 +1,6 @@
 import { chapters } from './data/chapters';
 import { Experience } from './scene/experience';
+import { setLightMode } from './scene/palette';
 import { Sound } from './ui/audio';
 import { Hud } from './ui/hud';
 import { ScrollDriver } from './ui/scroll';
@@ -39,6 +40,7 @@ export const boot3D = async (caps: Capabilities, params: URLSearchParams, loader
     for (const ev of ['click', 'keydown', 'touchstart', 'scroll'] as const) removeEventListener(ev, enableSound);
   };
   for (const ev of ['click', 'keydown', 'touchstart', 'scroll'] as const) addEventListener(ev, enableSound, { once: false });
+  hud.onThemeChange = (light) => setLightMode(light);
   exp.onFrame = (s) => hud.frame(s);
   exp.onTier = (t) => hud.tier(t);
 

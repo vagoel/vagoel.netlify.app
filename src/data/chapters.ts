@@ -182,4 +182,38 @@ export const cities = ['India', 'Singapore', 'Abu Dhabi'];
 const INDIA_CITIES = new Set(['Pune', 'Noida']);
 export const cityToNav = (city: string): string => INDIA_CITIES.has(city) ? 'India' : city;
 
+export const lightPalettes: Record<string, PaletteDef> = {
+  hero:    P('#78b8e8', '#ffa0c0', '#d8e8f8', '#0099cc', '#d03070', '#ffe0a0', 0.0),
+  about:   P('#6aa0e0', '#a88cf0', '#d0daf0', '#6050d8', '#0099cc', '#f0a8d0', 0.0),
+  tcs:     P('#88a0d0', '#f09848', '#e0d8c8', '#e09030', '#d04040', '#ffe0a0', 0.0),
+  extentia:P('#70b8d0', '#30c090', '#c8e8e0', '#20b080', '#3898e0', '#d0ffe0', 0.0),
+  adobe:   P('#d88888', '#e04040', '#f0d0d0', '#d83040', '#e0a020', '#f0b8a0', 0.0),
+  scbDev:  P('#70a0d8', '#3070d0', '#c8d8f0', '#4898e0', '#00b898', '#b0d0f0', 0.0),
+  aviva:   P('#8088d8', '#6858e0', '#d0d0e8', '#e0c030', '#6858d8', '#f0e888', 0.0),
+  cat:     P('#68b0d0', '#00b8e0', '#c0e0e8', '#00c8e0', '#00d888', '#c0f0f8', 0.0, 0, 0.0022),
+  adia:    P('#c0a870', '#d8a030', '#e8e0c8', '#d8a830', '#f0f0f0', '#f0e0a0', 0.0, 0, 0.0020),
+  skills:  P('#9088d8', '#7038e0', '#d0c8e0', '#a078f0', '#2898e0', '#d8c0f0', 0.0, 0, 0.0018),
+  quest:   P('#68b8a8', '#00b880', '#c0e8e0', '#00e090', '#00a0e0', '#a0f0d8', 0.0, 0, 0.0018),
+  honors:  P('#d0b868', '#e0a800', '#e8e0c0', '#e0b830', '#d06800', '#f8f0b0', 0.0, 0, 0.0018),
+  certs:   P('#68b8b0', '#30c8a8', '#c0e8e0', '#30c8a8', '#e0a828', '#c8f8f0', 0.0, 0, 0.0018),
+  contact: P('#68a0b0', '#10d8a0', '#c0e0e8', '#00d8b8', '#8050e0', '#a0f0d8', 0.0, 0, 0.0018),
+};
+
+export const lightChapterPalettes: PaletteDef[] = [
+  lightPalettes.hero,
+  lightPalettes.about,
+  lightPalettes.tcs,
+  lightPalettes.extentia,
+  lightPalettes.adobe,
+  lightPalettes.scbDev,
+  lightPalettes.aviva,
+  lightPalettes.cat,
+  lightPalettes.adia,
+  lightPalettes.skills,
+  lightPalettes.quest,
+  lightPalettes.honors,
+  lightPalettes.certs,
+  lightPalettes.contact,
+];
+
 export const rangeOf = (c: Chapter) => (c.role ? fmtRange(c.role) : '');

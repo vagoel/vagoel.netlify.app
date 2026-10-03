@@ -17,6 +17,7 @@ export class Hud {
   private readonly cityEls: HTMLElement[];
   private readonly tourBtn: HTMLButtonElement;
   private readonly soundBtn: HTMLButtonElement;
+  private readonly themeBtn: HTMLButtonElement;
   private readonly tip: HTMLElement;
   private readonly root: HTMLElement;
   private readonly quality: HTMLElement;
@@ -25,6 +26,7 @@ export class Hud {
   private chapter = -1;
   private lastP = -1;
   private cityIdx = -1;
+  onThemeChange?: (light: boolean) => void;
 
   constructor(
     hud: HTMLElement,
@@ -44,6 +46,7 @@ export class Hud {
         <div class="tools">
           <button class="pill" data-act="tour" aria-pressed="false"><i class="ico ico--play"></i><span>Autopilot</span></button>
           <button class="pill" data-act="sound" aria-pressed="false"><i class="ico ico--sound"></i><span>Sound off</span></button>
+          <button class="pill" data-act="theme" aria-pressed="false" title="Toggle light/dark theme"><i class="ico ico--theme"></i><span>Light</span></button>
           <button class="pill" data-act="classic"><i class="ico ico--doc"></i><span>Classic</span></button>
         </div>
       </header>
@@ -61,6 +64,7 @@ export class Hud {
     this.cityEls = Array.from(hud.querySelectorAll<HTMLElement>('.cities li'));
     this.tourBtn = hud.querySelector('[data-act="tour"]')!;
     this.soundBtn = hud.querySelector('[data-act="sound"]')!;
+    this.themeBtn = hud.querySelector('[data-act="theme"]')!;
     this.quality = hud.querySelector('.badge-quality')!;
     this.live = hud.querySelector('.sr-only')!;
 
@@ -88,6 +92,15 @@ export class Hud {
           this.soundBtn.setAttribute('aria-pressed', String(on));
           this.soundBtn.querySelector('span')!.textContent = on ? 'Sound on' : 'Sound off';
           this.soundBtn.classList.toggle('is-on', on);
+          break;
+        }
+        case 'theme': {
+          const light = !document.documentElement.classList.contains('is-light');
+          document.documentElement.classList.toggle('is-light', light);
+          this.themeBtn.setAttribute('aria-pressed', String(light));
+          this.themeBtn.querySelector('span')!.textContent = light ? 'Dark' : 'Light';
+          this.themeBtn.classList.toggle('is-on', light);
+          this.onThemeChange?.(light);
           break;
         }
         case 'classic':

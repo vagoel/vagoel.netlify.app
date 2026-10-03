@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { chapters, type PaletteDef } from '../data/chapters';
+import { chapters, lightChapterPalettes, type PaletteDef } from '../data/chapters';
 import { lerp } from '../utils/math';
 
 export interface RuntimePalette {
@@ -26,7 +26,10 @@ const make = (d: PaletteDef): RuntimePalette => ({
   fogDensity: d.fogDensity,
 });
 
-export const chapterPalettes = chapters.map((c) => make(c.palette));
+export const darkPalettes = chapters.map((c) => make(c.palette));
+export const lightPalettes = lightChapterPalettes.map((p) => make(p));
+export let chapterPalettes = darkPalettes;
+export const setLightMode = (light: boolean) => { chapterPalettes = light ? lightPalettes : darkPalettes; };
 export const createPalette = () => make(chapters[0].palette);
 
 export const blendPalette = (a: RuntimePalette, b: RuntimePalette, t: number, out: RuntimePalette) => {
